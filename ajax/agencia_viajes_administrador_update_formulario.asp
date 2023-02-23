@@ -1,0 +1,65 @@
+<!-- #include file=conexion.asp -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> Agencia de Viajes </title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+	<header>
+		<section class="cabecera">
+			<img class="logo" src="img/avion.png">
+			<h1> AGENCIA DE VIAJES LAJARA </h1>
+			<a class="admin" href="agencia_viajes_usuario.asp"> INICIO </a>
+			<a class="admin" href="iniciar_sesion.asp"> ADMINISTRADOR </a>
+		</section>
+			
+	</header>
+
+	<main>
+		<section>
+				<h2> PÁGINA DE INICIO ADMINISTRADOR </h2> <br>
+				<nav>
+					<ul>
+						<li><a href="agencia_viajes_administrador.asp"> LISTA </a></li>
+						<li><a href="agencia_viajes_administrador_insert.asp"> AÑADIR  </a></li>
+						<li><a href="agencia_viajes_administrador_update.asp"> EDITAR  </a></li>
+						<li><a href="agencia_viajes_administrador_delete.asp"> ELIMINAR  </a></li>
+					</ul>
+				</nav>
+			</section>
+		<br>
+
+<%
+	id_recibido=request.querystring("id")
+	'seleccionamos la ciudad que tiene dicho id'
+	Set consulta = Conexion.Execute("select IDCIUDAD, CIUDAD, TASA_AEROPUERTO from CIUDAD where IDCIUDAD=" & id_recibido)
+	id=consulta("IDCIUDAD")
+	ciudad=consulta("CIUDAD")
+	tasa=consulta("TASA_AEROPUERTO")
+%>
+
+<form name="formulario_1 " action="agencia_viajes_administrador_update_formulario_exito.asp" method="post">
+	<table>
+			<tr><td> Codigo Ciudad </td><td><input type=text name=idciudad readonly value=
+				<% response.write(id) %>
+			></td></tr>
+			
+			<td> Ciudad </td><td><input type=text name=ciudad  value="
+				<% response.write(ciudad) %>"
+			></td></tr>
+			
+			<td> Tasa Aeropuerto </td><td><input type=text name=tasa_aeropuerto  value=
+				<% response.write(tasa) %>
+			></td></tr>
+			
+			<tr><td colspan=1><input type="submit" id="enviar" value="actualizar"/></td></tr>
+	</table>
+</form>
+</main>
+</body>
+</html>
